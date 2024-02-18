@@ -211,9 +211,9 @@ public class RoleImportService {
     ) {
         String roleName = roleToImport.getName();
         RoleRepresentation patchedRole = CloneUtil.patch(existingRole, roleToImport, propertiesWithDependencies);
-        if (roleToImport.getAttributes() != null) {
-            patchedRole.setAttributes(roleToImport.getAttributes());
-        }
+//        if (roleToImport.getAttributes() != null) {
+//            patchedRole.setAttributes(roleToImport.getAttributes());
+//        }
 
         if (!CloneUtil.deepEquals(existingRole, patchedRole)) {
             logger.debug("Update realm-level role '{}' in realm '{}'", roleName, realmName);
