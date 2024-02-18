@@ -35,7 +35,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -212,15 +211,14 @@ public class RoleImportService {
     ) {
         String roleName = roleToImport.getName();
 
-        ObjectMapper mapper = new ObjectMapper();
         logger.debug("START LOGGER FOR DEBUGGING REALM ROLE ATTRIBUTES UPDAGE");
-        logger.debug("existingRole_before = {}", mapper.writeValueAsString(existingRole));
-        logger.debug("roleToImport_before = {}", mapper.writeValueAsString(roleToImport));
+        logger.debug("existingRole_before = {}", existingRole);
+        logger.debug("roleToImport_before = {}", roleToImport);
         RoleRepresentation patchedRole = CloneUtil.patch(existingRole, roleToImport, propertiesWithDependencies);
 
-        logger.debug("existingRole_after = {}", mapper.writeValueAsString(existingRole));
-        logger.debug("roleToImport_after = {}", mapper.writeValueAsString(roleToImport));
-        logger.debug("patchedRole_after = {}", mapper.writeValueAsString(patchedRole));
+        logger.debug("existingRole_after = {}", existingRole);
+        logger.debug("roleToImport_after = {}", roleToImport);
+        logger.debug("patchedRole_after = {}", patchedRole);
         logger.debug("END LOGGER FOR DEBUGGING REALM ROLE ATTRIBUTES UPDAGE");
 
 //        if (roleToImport.getAttributes() != null) {
