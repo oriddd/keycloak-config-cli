@@ -20,6 +20,8 @@
 
 package de.adorsys.keycloak.config.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.adorsys.keycloak.config.exception.ImportProcessingException;
 import de.adorsys.keycloak.config.model.RealmImport;
 import de.adorsys.keycloak.config.properties.ImportConfigProperties;
@@ -208,17 +210,19 @@ public class RoleImportService {
             String realmName,
             RoleRepresentation existingRole,
             RoleRepresentation roleToImport
-    ) {
+    ) throws JsonProcessingException {
         String roleName = roleToImport.getName();
 
+        ObjectMapper mapper = new ObjectMapper();
         logger.debug("START LOGGER FOR DEBUGGING REALM ROLE ATTRIBUTES UPDAGE");
-        logger.debug("existingRole_before = {}", existingRole);
-        logger.debug("roleToImport_before = {}", roleToImport);
+        logger.debug("existingRole_before = {}", mapper.writeValueAsString(existingRole));
+        logger.debug("roleToImport_before = {}", mapper.writeValueAsString(roleToImport));
         RoleRepresentation patchedRole = CloneUtil.patch(existingRole, roleToImport, propertiesWithDependencies);
 
-        logger.debug("existingRole_after = {}", existingRole);
-        logger.debug("roleToImport_after = {}", roleToImport);
-        logger.debug("patchedRole_after = {}", patchedRole);
+
+        logger.debug("existingRole_after = {}", mapper.writeValueAsString(existingRole));
+        logger.debug("roleToImport_after = {}", mapper.writeValueAsString(roleToImport));
+        logger.debug("patchedRole_after = {}", mapper.writeValueAsString(patchedRole));
         logger.debug("END LOGGER FOR DEBUGGING REALM ROLE ATTRIBUTES UPDAGE");
 
 //        if (roleToImport.getAttributes() != null) {
